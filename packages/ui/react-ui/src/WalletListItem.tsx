@@ -9,14 +9,16 @@ export interface WalletListItemProps {
     handleClick: MouseEventHandler<HTMLButtonElement>;
     tabIndex?: number;
     wallet: Wallet;
+    isDefault: boolean;
 }
 
-export const WalletListItem: FC<WalletListItemProps> = ({ handleClick, tabIndex, wallet }) => {
+export const WalletListItem: FC<WalletListItemProps> = ({ handleClick, tabIndex, wallet, isDefault }) => {
     return (
-        <li>
+        <li className='wallet-list-item'>
             <Button onClick={handleClick} startIcon={<WalletIcon wallet={wallet} />} tabIndex={tabIndex}>
                 {wallet.adapter.name}
-                {wallet.readyState === WalletReadyState.Installed && <span>Detected</span>}
+                {wallet.readyState === WalletReadyState.Installed && <span className='detected'>Detected</span>}
+                {isDefault && <span className='detected'>Recommended</span>}
             </Button>
         </li>
     );
