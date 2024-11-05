@@ -31,14 +31,14 @@ export interface MetaKeepWalletAdapterConfig {
     };
 }
 
-export const MetaKeepWalletName = 'Connect With Email' as WalletName<'Continue With Email'>;
+export const MetaKeepWalletName = 'MetaKeep' as WalletName<'MetaKeep'>;
 
 
 export class MetaKeepWalletAdapter extends BaseMessageSignerWalletAdapter {
 
     name = MetaKeepWalletName;
     url = 'https://metakeep.xyz';
-    icon = 'https://metakeep.xyz/favicon.ico';
+    icon = 'https://e7.pngegg.com/pngimages/194/853/png-clipart-email-icon-email-telephone-number-customer-service-phone-blue-electronics.png';
     private _metaKeepInstance: MetaKeep | null | undefined;
     private _publicKey: PublicKey | null;
     private _connecting: boolean;
