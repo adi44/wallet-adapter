@@ -10,7 +10,7 @@ import {
     WalletReadyState,
     WalletSignTransactionError,
 } from '@solana/wallet-adapter-base';
-import type { Transaction, TransactionVersion } from '@solana/web3.js';
+import { Transaction, TransactionVersion, VersionedTransaction } from '@solana/web3.js';
 import { PublicKey } from '@solana/web3.js';
 import { MetaKeep } from 'metakeep';
 
@@ -138,8 +138,11 @@ export class MetaKeepWalletAdapter extends BaseMessageSignerWalletAdapter {
         try {
             if (!this.connected) throw new WalletNotConnectedError();
 
-            const signedMessage = await this._metaKeepInstance?.signMessage(message.toString(), 'Sign Message');
-            return new Uint8Array(signedMessage);
+            const signedMessage = await this._metaKeepInstance?.signMessage(new TextDecoder().decode(message), 'Sign Message');
+            console.log(signedMessage);
+            // convert hex to Uint8Array
+            const signature = new Uint8Array(Buffer.from(signedMessage.signature.slice(2), 'hex'));
+            return signature;
         }
         catch (error: any) {
             throw new WalletSignTransactionError(error);
@@ -157,11 +160,15 @@ export class MetaKeepWalletAdapter extends BaseMessageSignerWalletAdapter {
             if (isVersionedTransaction(transaction)) {
                 // Handle VersionedTransaction
                 const signedTransaction = await this._metaKeepInstance?.signTransaction(transaction as any, 'Sign Transaction');
-                return signedTransaction as T;
+                console.log(signedTransaction);
+                const signedRawTransaction = signedTransaction.signedRawTransaction;
+                return VersionedTransaction.deserialize(new Uint8Array(Buffer.from(signedRawTransaction.slice(2), 'hex'))) as T;
             } else {
                 // Handle Transaction
                 const signedTransaction = await this._metaKeepInstance?.signTransaction(transaction, 'Sign Transaction');
-                return signedTransaction as T;
+                console.log(signedTransaction);
+                const signedRawTransaction = signedTransaction.signedRawTransaction;
+                return Transaction.from(new Uint8Array(Buffer.from(signedRawTransaction.slice(2), 'hex'))) as T;
             }
         }
         catch (error: any) {
