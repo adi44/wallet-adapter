@@ -18,7 +18,7 @@ export const WalletListItem: FC<WalletListItemProps> = ({ handleClick, tabIndex,
     return (
         <li className='wallet-list-item'>
             <Button onClick={handleClick} startIcon={<WalletIcon wallet={wallet} />} tabIndex={tabIndex}>
-                {isMetaKeepWallet(wallet) ? "Use Email (or Phone Number)": wallet.adapter.name}
+                {isMetaKeepWallet(wallet) ? "Use Email (or Phone)": wallet.adapter.name}
                 {wallet.readyState === WalletReadyState.Installed && <div className='background-tile'><span className='detected'>Detected</span></div>}
                 {isDefault && <div className='background-tile'><span className='detected'>Recommended</span></div>}
             </Button>

@@ -38,7 +38,7 @@ export class MetaKeepWalletAdapter extends BaseMessageSignerWalletAdapter {
 
     name = MetaKeepWalletName;
     url = 'https://metakeep.xyz';
-    icon = 'https://e7.pngegg.com/pngimages/194/853/png-clipart-email-icon-email-telephone-number-customer-service-phone-blue-electronics.png';
+    icon = 'https://cdn-icons-png.flaticon.com/512/2571/2571359.png';
     private _metaKeepInstance: MetaKeep | null | undefined;
     private _publicKey: PublicKey | null;
     private _connecting: boolean;
